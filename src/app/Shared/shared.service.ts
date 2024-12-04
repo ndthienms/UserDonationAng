@@ -12,6 +12,8 @@ export class SharedService {
   public signUpFormData: any = new FormData();
   public signUpRole:string = "";
 
+  public paymentRequestForm: FormGroup = new FormGroup({});
+
   Provinces: string[] = [
     "Tất cả",
     "Bắc Giang",

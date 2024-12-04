@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600&display=swap');
+
+.my-5 {
+    background-color: #1d3762;
+    padding: 100px 0;
+}
+
+.page {
+    background: #ffffff;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    border-radius: 15px;
+}
+
+.page[size="A4"] {
+    width: 21cm;
+    height: 29.7cm;
+    overflow: hidden;
+}
+
+.bb {
+    border-bottom: 3px solid #ccc;
+}
+
+
+.donation-value .value h4 {
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #1d3762;
+}
+
+.donation-value .value input:focus {
+    border: 1px solid #ccc
+}
+
+
+
+.balance-info .balance-container {
+    margin: 100px 0;
+}
+
+.balance-info .balance-container .title h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    color: #1d3762;
+}
+
+.balance-info .balance-container form input {
+    display: none;
+}
+
+.balance-info .balance-container form .category {
+    margin-top: 10px;
+    padding-top: 20px;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 15px;
+}
+
+.balance-info .category label {
+    /* width: 100%; */
+    /* height: 65px; */
+    height: 145px;
+    padding: 20px;
+    box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 5px;
+    position: relative;
+}
+
+.balance-info #visa:checked~.category .visaMethod,
+#mastercard:checked~.category .mastercardMethod,
+#paypal:checked~.category .paypalMethod,
+#AMEX:checked~.category .amexMethod {
+    box-shadow: 0px 0px 0px 1px #1d3762;
+}
+
+
+.balance-info #visa:checked~.category .visaMethod .check,
+#mastercard:checked~.category .mastercardMethod .check,
+#paypal:checked~.category .paypalMethod .check,
+#AMEX:checked~.category .amexMethod .check {
+    display: block;
+}
+
+.balance-info label .imgName {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.balance-info .imgName span {
+    /* margin-left: 20px; */
+    font-family: Arial, Helvetica, sans-serif;
+
+    position: absolute;
+    top: 72%;
+    transform: translateY(-72%);
+}
+
+.balance-info .imgName .imgContainer {
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    top: 35%;
+    transform: translateY(-35%);
+}
+
+.balance-info .visa img {
+    width: 50px;
+    /* margin-left: 5px; */
+}
+
+.balance-info .mastercard img {
+    width: 50px;
+}
+
+.balance-info .check {
+    display: none;
+    position: absolute;
+    top: -4px;
+    right: -4px;
+}
+
+.balance-info .check i {
+    font-size: 18px;
+}
+
+/* Top Section */
+.top-content {
+    padding-bottom: 15px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1d3762;
+}
+
+.logo img {
+    height: 60px;
+}
+
+/* User Store Section */
+.store-user {
+    padding-bottom: 25px;
+}
+
+.store-user p {
+    margin: 0;
+    font-weight: 600;
+}
+
+.store-user .address {
+    font-weight: 400;
+}
+
+.store-user h4 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.2rem;
+}
+
+.extra-info p span {
+    font-weight: 400;
+}
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}

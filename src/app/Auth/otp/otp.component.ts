@@ -47,7 +47,7 @@ export class OtpComponent implements OnInit {
             this.loginForm.value.password = this.shareService.signUpForm.value.password;
             this.shareService.signUpForm = new FormGroup({});
             this.shareService.signUpRole = "";
-            this.LoginSubmit(this.loginForm);
+            this.LoginSubmit(this.loginForm, "donor");
           }
         },
         (err: any) => {
@@ -132,7 +132,7 @@ export class OtpComponent implements OnInit {
             this.loginForm.value.password = this.shareService.signUpForm.value.password;
             this.shareService.signUpForm = new FormGroup({});
             this.shareService.signUpRole = "";
-            this.LoginSubmit(this.loginForm);
+            this.LoginSubmit(this.loginForm, "recipient");
           }
         },
         (err: any) => {
@@ -167,7 +167,7 @@ export class OtpComponent implements OnInit {
     }
   }
 
-  LoginSubmit(loginForm: any) {
+  LoginSubmit(loginForm: any, role: any) {
     this.userAuthenticationService.SignIn(loginForm.value).subscribe(
       (res: any) => {
         // Convert res to base64
@@ -186,8 +186,12 @@ export class OtpComponent implements OnInit {
         localStorage.setItem('username', userName);
         localStorage.setItem('userava', userAva);
 
-        console.log(res);
-        this.router.navigateByUrl('/');
+        if (role == "donor") {
+          this.router.navigateByUrl('/');
+        }
+        if (role == "recipient") {
+          this.router.navigateByUrl('/recipient');
+        }
       },
       (err: any) => {
         console.log(err);

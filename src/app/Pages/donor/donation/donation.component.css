@@ -23,7 +23,7 @@
     border-bottom: 3px solid #ccc;
 }
 
-
+/* ==================== Input Donation Value ==================== */
 .donation-value .value h4 {
     font-weight: 600;
     margin-bottom: 30px;
@@ -34,8 +34,7 @@
     border: 1px solid #ccc
 }
 
-
-
+/* ==================== Payment Method ==================== */
 .balance-info .balance-container {
     margin: 100px 0;
 }
@@ -73,18 +72,14 @@
     position: relative;
 }
 
-.balance-info #visa:checked~.category .visaMethod,
-#mastercard:checked~.category .mastercardMethod,
-#paypal:checked~.category .paypalMethod,
-#AMEX:checked~.category .amexMethod {
+.balance-info #vnpay:checked~.category .VnPayMethod,
+#zalopay:checked~.category .ZaloPayMethod {
     box-shadow: 0px 0px 0px 1px #1d3762;
 }
 
 
-.balance-info #visa:checked~.category .visaMethod .check,
-#mastercard:checked~.category .mastercardMethod .check,
-#paypal:checked~.category .paypalMethod .check,
-#AMEX:checked~.category .amexMethod .check {
+.balance-info #vnpay:checked~.category .VnPayMethod .check,
+#zalopay:checked~.category .ZaloPayMethod .check {
     display: block;
 }
 
@@ -115,12 +110,12 @@
     transform: translateY(-35%);
 }
 
-.balance-info .visa img {
+.balance-info .vnpay img {
     width: 50px;
     /* margin-left: 5px; */
 }
 
-.balance-info .mastercard img {
+.balance-info .zalopay img {
     width: 50px;
 }
 
@@ -135,7 +130,8 @@
     font-size: 18px;
 }
 
-/* Top Section */
+/* ==================== Payment Bill ==================== */
+/* ---------- Top Section ---------- */
 .top-content {
     padding-bottom: 15px;
     font-size: 1.5rem;
@@ -147,21 +143,21 @@
     height: 60px;
 }
 
-/* User Store Section */
-.store-user {
+/* ---------- Campaign Section ---------- */
+.campaign-user {
     padding-bottom: 25px;
 }
 
-.store-user p {
+.campaign-user p {
     margin: 0;
     font-weight: 600;
 }
 
-.store-user .address {
+.campaign-user .address {
     font-weight: 400;
 }
 
-.store-user h4 {
+.campaign-user h4 {
     font-family: 'Rajdhani', sans-serif;
     font-size: 1.2rem;
 }
@@ -170,15 +166,33 @@
     font-weight: 400;
 }
 
+/* ================== Payment Btn ==================== */
+.payment{
+    outline: none;
+    border: none;
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px 0;
+    margin-top: 70px;
+    background-color: #1d3762;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
 
-/* Chrome, Safari, Edge, Opera */
+.payment:active{
+    background-color: #4f84db;
+}
+
+
+/* ==================== Chrome, Safari, Edge, Opera =================== */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-/* Firefox */
+/* ==================== Firefox ================== */
 input[type=number] {
     -moz-appearance: textfield;
 }

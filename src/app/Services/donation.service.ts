@@ -15,10 +15,11 @@ export class DonationService {
       {
         reportProgress: true,
         observe: 'events',
-        headers: new HttpHeaders({ 
-          'Content-Type': 'application/json' 
-      })
-      },                                                                   
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        }),
+        responseType: 'text'
+      },
     );
   }
 }

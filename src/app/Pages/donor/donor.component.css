@@ -256,4 +256,6 @@
 .main-wrapper {
     /* margin-top: 80px;
     padding: 10px 50px; */
+    margin: 0;
+    padding: 0;
 }

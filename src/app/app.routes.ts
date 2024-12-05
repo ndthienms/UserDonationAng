@@ -7,6 +7,7 @@ import { DonorComponent } from './Pages/donor/donor.component';
 import { CampaignComponent } from './Pages/donor/campaign/campaign.component';
 import { DonationComponent } from './Pages/donor/donation/donation.component';
 import { AuthGuard } from './Guards/auth.guard';
+import { DonationResponseComponent } from './Pages/donor/donation-response/donation-response.component';
 
 export const routes: Routes = [
     // {
@@ -36,6 +37,7 @@ export const routes: Routes = [
         children: [
             { path: 'campaign', component: CampaignComponent },
             { path: 'donation', component: DonationComponent, canActivate: [AuthGuard], data: { permittedRoles: ['donor'] } },
+            { path: 'donation/:paymentresult', component: DonationResponseComponent, canActivate: [AuthGuard], data: { permittedRoles: ['donor'] } },
             { path: '', redirectTo: 'campaign', pathMatch: 'full' },
         ]
     },

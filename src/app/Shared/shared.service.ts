@@ -12,6 +12,7 @@ export class SharedService {
   public signUpFormData: any = new FormData();
   public signUpRole:string = "";
 
+  public campaign: any;
   public paymentRequestForm: FormGroup = new FormGroup({});
 
   Provinces: string[] = [

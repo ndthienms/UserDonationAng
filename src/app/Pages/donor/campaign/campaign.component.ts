@@ -118,20 +118,23 @@ export class CampaignComponent implements OnInit {
         window.open(url, '_blank');
       }
       else {
-        var userIdString = localStorage.getItem('userid')
-        var userIdNumber: number | null = userIdString == null ? null : +userIdString;
-        this.sharedService.paymentRequestForm = new FormGroup({
-          'campaignid': new FormControl(campaign.id, Validators.required),
-          'userid': new FormControl(userIdNumber, Validators.required),
-          'userrole': new FormControl("donor", Validators.required),
-          'amount': new FormControl(0, Validators.required),
-          'paymentmethod': new FormControl(null, Validators.required)
-        });
+        // var userIdString = localStorage.getItem('userid')
+        // var userIdNumber: number | null = userIdString == null ? null : +userIdString;
+        // this.sharedService.paymentRequestForm = new FormGroup({
+        //   'campaignid': new FormControl(campaign.id, Validators.required),
+        //   'userid': new FormControl(userIdNumber, Validators.required),
+        //   'userrole': new FormControl("donor", Validators.required),
+        //   'amount': new FormControl(0, Validators.required),
+        //   'paymentmethod': new FormControl(null, Validators.required)
+        // });
+        this.sharedService.campaign = campaign;
 
-        const url = this.router.serializeUrl(
-          this.router.createUrlTree([`/donation`])
-        );
-        window.open(url, '_blank');
+        // const url = this.router.serializeUrl(
+        //   this.router.createUrlTree([`/donation`])
+        // );
+        // window.open(url, '_blank');
+
+        this.router.navigateByUrl('/donation');
       }
     }
     else {

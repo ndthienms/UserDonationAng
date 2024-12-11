@@ -194,6 +194,8 @@ li {
 
 .campaign-card-group {
     margin-bottom: 3rem;
+    text-decoration: none;
+    color: #10336b;
 }
 
 .campaign-card {

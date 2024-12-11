@@ -3,13 +3,13 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { SharedService } from '../../../Shared/shared.service';
 import { NgFor } from '@angular/common';
 import { CampaignService } from '../../../Services/campaign.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { DonationService } from '../../../Services/donation.service';
 
 @Component({
   selector: 'app-campaign',
   standalone: true,
-  imports: [ReactiveFormsModule, NgFor],
+  imports: [ReactiveFormsModule, NgFor, RouterLink],
   templateUrl: './campaign.component.html',
   styleUrl: './campaign.component.css'
 })

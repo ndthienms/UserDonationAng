@@ -16,7 +16,7 @@
 
         <!-- ==================== Campaign ========================== -->
         <div class="campaign">
-            <div *ngFor="let campaign of campaignList" class="campaign-card-group">
+            <div  *ngFor="let campaign of campaignList" class="campaign-card-group">
                 <div class="campaign-card">
                     <div class="campaign-card-banner">
                         <img src={{campaign.coverSrc}}
@@ -34,9 +34,9 @@
                             </div>
                         </div>
                         <h3>
-                            <span href="#" class="campaign-title">
+                            <a routerLink="/campaign/{{campaign.id}}" class="campaign-title">
                                 {{campaign.title}}
-                            </span>
+                            </a>
                         </h3>
                         <p class="campaign-text">
                             {{campaign.target}}

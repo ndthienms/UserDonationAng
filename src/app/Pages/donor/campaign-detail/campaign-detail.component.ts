@@ -11,6 +11,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { DonationService } from '../../../Services/donation.service';
 
 import * as signalR from '@microsoft/signalr';
+import { RateCampaignService } from '../../../Services/rate-campaign.service';
 
 @Component({
   selector: 'app-campaign-detail',
@@ -26,6 +27,7 @@ export class CampaignDetailComponent implements OnInit {
     private imageCampaignService: ImageCampaignService,
     private campaignParticipantService: CampaignParticipantService,
     private donationService: DonationService,
+    private rateCampaignService: RateCampaignService,
     public sharedService: SharedService,
     private router: Router,
     private route: ActivatedRoute
@@ -35,6 +37,8 @@ export class CampaignDetailComponent implements OnInit {
 
   // SignalR Hub
   hubConnection: signalR.HubConnection | any;
+
+  userId: any;
 
   campaign: any;
   donatedTotal: number = 0;
@@ -58,8 +62,17 @@ export class CampaignDetailComponent implements OnInit {
   donationList: Array<any> = [];
   donationSearchForm: FormGroup = new FormGroup({});
 
+  ratingPageIndex: number = 0;
+  ratingResponse: any;
+  ratingRequest: boolean = true;
+  ratingList: Array<any> = [];
+  rateForm: FormGroup = new FormGroup({});
+
 
   ngOnInit(): void {
+
+    this.userId = localStorage.getItem("userid");
+
     this.GetCampaign();
     this.GetTotal();
     this.GetImages(1);
@@ -68,11 +81,14 @@ export class CampaignDetailComponent implements OnInit {
     this.CheckParticipated();
     this.InitDonationSearch();
     this.GetDonationList();
+    this.GetRatingList();
+    this.InitRateForm();
 
     this.StartConnection();
     this.Listener();
   }
 
+  // SignalR Hub
   StartConnection = () => {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl('http://localhost:5178/donationhub', {
@@ -311,11 +327,105 @@ export class CampaignDetailComponent implements OnInit {
     });
   }
 
-  ExportDonationFile(){
+  GetRatingList() {
+    if (this.ratingRequest) {
+      this.ratingPageIndex += 1;
+
+      var id = this.route.snapshot.paramMap.get('id');
+      var campaignId: number = +id!;
+
+      this.rateCampaignService.GetListByCampaignId(campaignId, this.ratingPageIndex).subscribe(
+        (res: any) => {
+          this.ratingResponse = res.body.$values;
+          if (this.ratingResponse.length < 5) {
+            this.ratingRequest = false;
+          }
+          this.ratingList = this.ratingList.concat(this.ratingResponse);
+          console.log(res);
+        },
+        err => {
+          console.log(err);
+        }
+      )
+    }
+  }
+
+  RatingRemove() {
+    var id = this.route.snapshot.paramMap.get('id');
+    var campaignId: number = +id!;
+
+    this.rateCampaignService.RemoveByDonorId(campaignId).subscribe(
+      (res: any) => {
+        this.ratingList.forEach((item, index) => {
+          if (item.donorId == this.userId) this.ratingList.splice(index, 1);
+        });
+
+        this.ConfirmationClose();
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
+  InitRateForm(): void {
+
+    let allStar = document.querySelectorAll('.rate-wrapper .rating .star')
+    const ratingValue = <HTMLInputElement>document.querySelector('.rating input')
+
+    var textarea = <HTMLInputElement>document.getElementById("rate-comment");
+    textarea.value = "";
+
+    allStar.forEach(i => {
+      i.classList.replace('bi-star-fill', 'bi-star')
+      i.classList.remove('active')
+    })
+
+    var id = this.route.snapshot.paramMap.get('id');
+    var campaignId: number = +id!;
+
+    let donorId: number = +this.userId;
+
+    this.rateForm = new FormGroup({
+      'campaignid': new FormControl(campaignId, Validators.required),
+      'donorid': new FormControl(donorId, Validators.required),
+      'rate': new FormControl(null, Validators.required),
+      'comment': new FormControl(null, Validators.required),
+      'rateddate': new FormControl(null, Validators.required),
+      'campaign': new FormControl(null, Validators.required),
+      'donor': new FormControl(null, Validators.required),
+    });
+  }
+
+  Rate() {
+    console.log(this.rateForm.value);
+    this.rateCampaignService.Add(this.rateForm.value).subscribe(
+      (res: any) => {
+        if (res.type === HttpEventType.Response) {
+          let response = res.body;
+          response.donorAva = localStorage.getItem("userava");
+          response.donorName = localStorage.getItem("username");
+
+          console.log(response)
+
+          let tempt = [response].concat(this.ratingList);
+
+          this.ratingList = tempt;
+
+          this.InitRateForm();
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
+  ExportDonationFile() {
 
   }
 
-  ExportExpenseFile(){
+  ExportExpenseFile() {
 
   }
 
@@ -376,6 +486,8 @@ export class CampaignDetailComponent implements OnInit {
         // click++
       }
     }
+
+    this.rateForm.get("rate")?.setValue(rateNum);
   }
 
   ReviewRating() {
@@ -390,5 +502,15 @@ export class CampaignDetailComponent implements OnInit {
         // click++
       }
     }
+  }
+
+  RatingRemovePopUp() {
+    let section = document.getElementById("confirmation");
+    section?.classList.add("active");
+  }
+
+  ConfirmationClose() {
+    let section = document.getElementById("confirmation");
+    section?.classList.remove("active");
   }
 }

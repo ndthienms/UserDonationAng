@@ -632,11 +632,94 @@ table {
     width: 100px;
 }
 
+/* Rating */
+.rated-list{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.rated-list .rated-box{
+    /* width: 500px; */
+    width: 100%;
+    box-shadow: 2px 2px 30px rgba(0,0,0,0.1);
+    background-color: #fff;
+    padding: 20px;
+    margin: 15px;
+}
+
+.rated-list .rated-box .delete-box{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    cursor: pointer;
+}
+
+.rated-list .rated-box .delete-box i{
+    cursor: pointer;
+}
+
+.rated-list .rated-box .profile-image{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.rated-list .rated-box .profile-image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.rated-list .rated-box .profile{
+    display: flex;
+    align-items: center;
+}
+
+.rated-list .rated-box .profile .name-user{
+    display: flex;
+    flex-direction: column;
+}
+
+.rated-list .rated-box .profile .name-user strong{
+    /* color: #3d3d3d3d; */
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+.rated-list .rated-box .profile .name-user span{
+    color: #979797;
+    font-size: 0.8rem;
+}
+
+.rated-list .rated-box .reviews{
+    color: #f9d71c;
+}
+
+.rated-list .rated-box .box-top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.rated-list .rated-box .client-comment{
+    font-size: 0.9rem;
+    color: #4b4b4b;
+}
+
 /* Rate Form */
 .rate-wrapper {
-	background: #FFF;
+	background: hsl(0, 0%, 100%);
 	padding: 2rem;
-	max-width: 576px;
+	/* max-width: 576px; */
 	width: 100%;
 	border-radius: .75rem;
 	box-shadow: 8px 8px 30px rgba(0,0,0,.05);
@@ -720,6 +803,90 @@ table {
 }
 .rate-wrapper .btn-group .btn.cancel:hover {
 	background: #F5F5F5;
+}
+
+/* =============== Confirmỉmation Popup =============== */
+#confirmation {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: #e3f2fd;
+}
+
+.accept-btn,
+.close-btn {
+    margin: 10px 0px 10px 10px;
+    width: 100px;
+    font-size: 18px;
+    font-weight: 400;
+    color: #fff;
+    padding: 6px 12px;
+    border: none;
+    background: #bf2032;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.accept-btn:hover,
+.close-btn:hover {
+    background-color: #961221;
+}
+
+.overlay {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    pointer-events: none;
+}
+
+#confirmation.active .overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-box {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 380px;
+    width: 100%;
+    padding: 30px 20px;
+    border-radius: 24px;
+    background-color: #fff;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    transform: translate(-50%, -50%) scale(1.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+#confirmation.active .modal-box {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-box i {
+    font-size: 5rem;
+    color: #bf2032;
+}
+
+.modal-box h2 {
+    font-size: 25px;
+    font-weight: 500;
+    color: #333;
+}
+
+.modal-box h3 {
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+    text-align: center;
 }
 
 @media (max-width: 678px) {

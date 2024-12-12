@@ -169,7 +169,7 @@
                                                 <!-- Button Form -->
                                                 <div class="button-form">
                                                     <button type="submit">Tìm</button>
-                                                    <button class="download" type="submit">Xuất Excel</button>
+                                                    <button (click)="ExportDonationFile()" class="download" type="submit">Xuất Excel</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -195,29 +195,15 @@
                                         </div>
                                         <div (click)="GetDonationList()" class="load-more"><button>Xem thêm</button></div>
                                     </div>
+
+                                    <!-- Expense -->
                                     <div class="tab-content-div">
                                         <!-- Filter Form -->
                                         <div class="filter-container">
-                                            <form class="form" action="">
-                                                <div class="information-form">
-                                                    <!-- Date Form -->
-                                                    <div class="column">
-                                                        <div class="input-box">
-                                                            <label>Start Date: </label>
-                                                            <input id="startdate" type="date" placeholder="Enter start date" required />
-                                                        </div>
-                                                        <div class="input-box">
-                                                            <label>End Date: </label>
-                                                            <input id="enddate" type="date" placeholder="Enter end date" required />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- Button Form -->
-                                                <div class="button-form">
-                                                    <button type="submit">Tìm</button>
-                                                    <button class="download" type="submit">Xuất Excel</button>
-                                                </div>
-                                            </form>
+                                            <!-- Button Form -->
+                                            <div class="button-form">
+                                                <button (click)="ExportExpenseFile()" class="download" type="submit">Xuất Excel</button>
+                                            </div>
                                         </div>
                                         <div class="table-container">
                                             <table>

@@ -311,6 +311,14 @@ export class CampaignDetailComponent implements OnInit {
     });
   }
 
+  ExportDonationFile(){
+
+  }
+
+  ExportExpenseFile(){
+
+  }
+
   // ----- Design -----
   ViewImage() {
     console.log("hello");

@@ -5,10 +5,10 @@
             <div class="gen-wrapper">
                 <!-- ---------- Title ---------- -->
                 <div class="section-title detail-title">
-                    <h3>Giúp đỡ trồng cây xanh</h3>
+                    <h3>{{campaign.title}}</h3>
                     <div class="status">
-                        <div class="campaign-status status-style fill-btn">Đang chuẩn bị</div>
-                        <div class="received-status status-style border-btn">Đã nhận</div>
+                        <div class="campaign-status status-style fill-btn">{{campaign.status}}</div>
+                        <div class="received-status status-style border-btn">{{campaign.received}}</div>
                     </div>
                 </div>
                 <!-- ---------- Detail - Image ---------- -->
@@ -16,51 +16,22 @@
                     <!-- ----- Image ----- -->
                     <div class="detail-image-container">
                         <div class="detail-img">
-                            <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
+                            <img src={{campaign.coverSrc}}
                                 alt="">
                         </div>
                         <div class="gallery-container">
                             <div class="gallery-title">Đang Chuẩn Bị</div>
                             <div class="prepare-gallery gallery">
-                                <img (click)="ViewImage()"
-                                    src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
-                                    alt="">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
-                                    alt="">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
-                                    alt="">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
-                                    alt="">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
-                                    alt="">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
-                                    alt="">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
-                                    alt="">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
+                                <img *ngFor="let image of images1" src={{image.imageSrc}}
                                     alt="">
                             </div>
-                            <button>Xem thêm</button>
+                            <button (click)="GetImages(1)">Xem thêm</button>
                         </div>
 
                         <div class="gallery-container">
                             <div class="gallery-title">Đang Tiến Hành</div>
                             <div class="ready-gallery gallery">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
-                                    alt="">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
-                                    alt="">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
-                                    alt="">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
-                                    alt="">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
-                                    alt="">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
-                                    alt="">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
-                                    alt="">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
+                                <img *ngFor="let image of images2" src={{image.imageSrc}}
                                     alt="">
                             </div>
                             <button>Xem thêm</button>
@@ -68,21 +39,7 @@
                         <div class="gallery-container">
                             <div class="gallery-title">Đã Kết Thúc</div>
                             <div class="end-gallery gallery">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
-                                    alt="">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
-                                    alt="">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
-                                    alt="">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
-                                    alt="">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
-                                    alt="">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
-                                    alt="">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
-                                    alt="">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
+                                <img *ngFor="let image of images3" src={{image.imageSrc}}
                                     alt="">
                             </div>
                             <button>Xem thêm</button>
@@ -93,51 +50,48 @@
                     <div class="detail-details">
                         <!-- Campaign Info -->
                         <div class="detail-info">
-                            <h4 class="target">Phủ xanh đồi trọc vì một trái đất xanh cho thế hệ mai sau</h4>
-                            <p class="detail-description detail-more">Lorem, ipsum dolor sit amet consectetur
-                                adipisicing elit. Iste enim animi nulla excepturi totam? Exercitationem id repellat
-                                laboriosam veniam assumenda provident numquam, beatae similique, tempora voluptate
-                                consequatur consequuntur officia qui.</p>
-                            <p class="detail-timespan detail-more"><span>Thời hạn: </span>05/05/2024 - 09/09/2025</p>
-                            <p class="detail-address detail-more"><span>Địa chỉ: </span>350 Đường Lê Đức Thọ Phường 6
-                                Quận Gò Vấp Thành phố Hồ Chí Minh</p>
-                            <p class="detail-target-amount detail-more"><span>Chỉ tiêu: </span>350000 vnd</p>
+                            <h4 class="target">{{campaign.target}}</h4>
+                            <p class="detail-description detail-more">{{campaign.description}}</p>
+                            <p class="detail-timespan detail-more"><span>Thời hạn: </span>{{campaign.startDate}} - {{campaign.endDate}}</p>
+                            <p class="detail-address detail-more"><span>Địa chỉ: </span>{{campaign.address}}</p>
+                            <p class="detail-target-amount detail-more"><span>Chỉ tiêu: </span>{{campaign.targetAmount}} vnd</p>
                         </div>
                         <!-- USer Info -->
                         <div class="detail-user">
                             <div class="profile-wrapper">
-                                <img src="https://res.cloudinary.com/ndthiencloudinary/image/upload/v1729100425/flood_tmjjze.jpg"
+                                <img src={{campaign.organiserAva}}
                                     alt="" width="50" height="50">
                             </div>
                             <div class="user-name">
-                                <a href="#">Hội chữ thập đỏ</a>
+                                <a href="#">{{campaign.organiserName}}</a>
                                 <p class="text-sm">
-                                    cùng với Phạm Linh Đan
+                                    cùng với {{campaign.recipientName}}
                                 </p>
                             </div>
                         </div>
                         <!-- Statistics -->
                         <div class="pro-list">
                             <div class="pro-card">
-                                <span>155000000</span>
+                                <span>{{donatedTotal}}</span>
                                 <p>Đóng góp</p>
                             </div>
                             <div class="pro-card">
-                                <span>58500000</span>
+                                <span>{{expensedTotal}}</span>
                                 <p>Chi tiêu</p>
                             </div>
                             <div class="pro-card">
-                                <span>100000000</span>
+                                <span>{{transferedTotal}}</span>
                                 <p>Được chuyển</p>
                             </div>
                         </div>
                         <!-- Participate - Donate -->
                         <div class="detail-button">
                             <div class="gen-main-btn fill-btn">
-                                <button class="fill-btn">Tham gia</button>
+                                <button (click)="JoinCampaign()" *ngIf="!participated" class="fill-btn">Tham gia</button>
+                                <button (click)="CancelCampaignPartipation()" *ngIf="participated" class="fill-btn">Hủy tham gia</button>
                             </div>
                             <div class="gen-main-btn border-btn">
-                                <button class="border-btn">Đóng góp</button>
+                                <button (click)="DonateActiveLink(campaign)" class="border-btn">Đóng góp</button>
                             </div>
                         </div>
                         <!-- Recipient Review -->
@@ -149,20 +103,20 @@
 
                                 <div class="review">
                                     <div class="head-review">
-                                        <img src="https://images.unsplash.com/photo-1488161628813-04466f872be2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
+                                        <img src={{campaign.recipientAva}}
                                             width="250px">
                                     </div>
                                     <div class="body-review">
-                                        <div class="name-review">Nathan D.</div>
+                                        <div class="name-review">{{campaign.recipientName}}</div>
                                         <div class="rating">
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star"></i>
+                                            
+                                            <i class="bi bi-star star"></i>
+                                            <i class="bi bi-star star"></i>
+                                            <i class="bi bi-star star"></i>
+                                            <i class="bi bi-star star"></i>
+                                            <i class="bi bi-star star"></i>
                                         </div>
-                                        <div class="desc-review">Lorem ipsum dolor, sit amet consectetur adipisicing
-                                            elit. Obcaecati eligendi suscipit illum officia ex eos.</div>
+                                        <div class="desc-review">{{campaign.ratedContentByRecipient}}</div>
                                     </div>
                                 </div>
 
@@ -181,13 +135,13 @@
                                     <div class="active tab-content-div">
                                         <!-- Filter Form -->
                                         <div class="filter-container">
-                                            <form class="form" action="">
+                                            <form [formGroup]="donationSearchForm" (ngSubmit)="FilterSubmit()" class="form" action="">
                                                 <div class="information-form">
                                                     <div class="column">
                                                         <!-- Input Form -->
                                                         <div class="input-box">
                                                             <label>Donor: </label>
-                                                            <input type="text" placeholder="Enter donor id, name" required />
+                                                            <input formControlName="donor" type="text" placeholder="Enter donor id, name" required />
                                                         </div>
                                                         <!-- Drop down -->
                                                         <div (click)="SortDropDown()" class="input-box dropdown">
@@ -203,12 +157,12 @@
                                                     <!-- Date Form -->
                                                     <div class="column">
                                                         <div class="input-box">
-                                                            <label>Start Date: </label>
-                                                            <input id="startdate" type="date" placeholder="Enter start date" required />
+                                                            <label>From Date: </label>
+                                                            <input formControlName="fromdate" id="startdate" type="date" placeholder="Enter start date" required />
                                                         </div>
                                                         <div class="input-box">
-                                                            <label>End Date: </label>
-                                                            <input id="enddate" type="date" placeholder="Enter end date" required />
+                                                            <label>To Date: </label>
+                                                            <input formControlName="todate" id="enddate" type="date" placeholder="Enter end date" required />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -225,21 +179,21 @@
                                                     <tr>
                                                         <th>Id</th>
                                                         <th>Name</th>
-                                                        <th>Phone number</th>
-                                                        <th>Email</th>
+                                                        <th>Amount</th>
+                                                        <th>Donation Date</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td><a href="#">123</a></td>
-                                                        <td>ABC</td>
-                                                        <td>0989765679</td>
-                                                        <td>email&#64;gmail.com</td>
+                                                    <tr *ngFor="let donation of donationList">
+                                                        <td><a href="#">{{donation.donorId}}</a></td>
+                                                        <td>{{donation.donorName}}</td>
+                                                        <td>{{donation.amount}}</td>
+                                                        <td>{{donation.donationDate}}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div class="load-more"><button>Xem thêm</button></div>
+                                        <div (click)="GetDonationList()" class="load-more"><button>Xem thêm</button></div>
                                     </div>
                                     <div class="tab-content-div">
                                         <!-- Filter Form -->

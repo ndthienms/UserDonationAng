@@ -130,10 +130,13 @@ button {
     border-radius: 15px;
 }
 
+.gallery-container{
+    width: 100%;
+}
+
 .gallery {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-
     /* column-gap: 10px;
     row-gap: 12px;
     margin: 38px 0; */
@@ -151,6 +154,7 @@ button {
 }
 
 .gallery-title {
+    width: 100%;
     margin: 25px 0;
     border-bottom: 3.5px solid #0f2343;
     color: #0f2343;

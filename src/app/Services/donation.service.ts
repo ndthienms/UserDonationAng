@@ -10,6 +10,18 @@ export class DonationService {
 
   constructor(private http: HttpClient) { }
 
+  GetSearchedListByCampaignId(campaignId: any, searchForm: any) {
+    return this.http.post(this.baseUrl + '/GetSearchedListByCampaignId/' + campaignId, searchForm,
+      {
+        reportProgress: true,
+        observe: 'events',
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      },
+    );
+  }
+
   CreatePaymentUrl(request: any) {
     return this.http.post(this.baseUrl + '/CreatePaymentUrl/', request,
       {

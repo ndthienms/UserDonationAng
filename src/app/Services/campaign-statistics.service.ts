@@ -4,23 +4,11 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class CampaignService {
+export class CampaignStatisticsService {
 
-  readonly baseUrl = 'http://localhost:5178/api/Campaign';
+  readonly baseUrl = 'http://localhost:5178/api/CampaignStatistics';
 
   constructor(private http: HttpClient) { }
-
-  GetSearchedListByUser(pageIndex: any, searchForm: any) {
-    return this.http.post(this.baseUrl + '/GetSearchedListByUser/' + pageIndex, searchForm,
-      {
-        reportProgress: true,
-        observe: 'events',
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json'
-        })
-      },
-    );
-  }
 
   GetById(campaignId: any) {
     return this.http.get(this.baseUrl + '/GetById/' + campaignId,

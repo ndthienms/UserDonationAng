@@ -604,7 +604,8 @@ table {
     margin: 1.5rem 2rem;
 }
 
-.filter-container .form .button-form button{
+.filter-container .form .button-form button,
+.button-form button{
     height: 40px;
     display: flex;
     align-items: center;
@@ -614,9 +615,21 @@ table {
     color: #1d3762;
 }
 
-.filter-container .form .button-form .download{
+.filter-container .form .button-form .download,
+.button-form .download{
     margin-top: 2rem;
     background-color: #d0fcdf;
+}
+
+.expesne-button-form{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 100%;
+}
+
+.expense-download{
+    width: 100px;
 }
 
 /* Rate Form */

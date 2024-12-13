@@ -9,6 +9,7 @@ import { DonationComponent } from './Pages/donor/donation/donation.component';
 import { AuthGuard } from './Guards/auth.guard';
 import { DonationResponseComponent } from './Pages/donor/donation-response/donation-response.component';
 import { CampaignDetailComponent } from './Pages/donor/campaign-detail/campaign-detail.component';
+import { MapComponent } from './Pages/map/map.component';
 
 export const routes: Routes = [
     // {
@@ -43,6 +44,7 @@ export const routes: Routes = [
             { path: '', redirectTo: 'campaign', pathMatch: 'full' },
         ]
     },
+    { path: 'map', component: MapComponent },
     { path: 'auth/donor', component: DonorAuthComponent },
     { path: 'auth/organiser', component: OrganiserAuthComponent },
     { path: 'auth/recipient', component: RecipientAuthComponent },

@@ -10,6 +10,8 @@ import { AuthGuard } from './Guards/auth.guard';
 import { DonationResponseComponent } from './Pages/donor/donation-response/donation-response.component';
 import { CampaignDetailComponent } from './Pages/donor/campaign-detail/campaign-detail.component';
 import { MapComponent } from './Pages/map/map.component';
+import { OrganiserComponent } from './Pages/organiser/organiser.component';
+import { ProfileComponent } from './Pages/organiser/profile/profile.component';
 
 export const routes: Routes = [
     // {
@@ -42,6 +44,13 @@ export const routes: Routes = [
             { path: 'donation', component: DonationComponent, canActivate: [AuthGuard], data: { permittedRoles: ['donor'] } },
             { path: 'donation/:paymentresult', component: DonationResponseComponent, canActivate: [AuthGuard], data: { permittedRoles: ['donor'] } },
             { path: '', redirectTo: 'campaign', pathMatch: 'full' },
+        ]
+    },
+    {
+        path: 'organiser', component: OrganiserComponent,
+        children: [
+            { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard], data: { permittedRoles: ['organiser'] } },
+            { path: 'organiser', redirectTo: 'profile/:id', pathMatch: 'full' },
         ]
     },
     { path: 'map', component: MapComponent },

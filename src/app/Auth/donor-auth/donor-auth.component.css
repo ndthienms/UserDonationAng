@@ -255,7 +255,8 @@
     transform: translateX(200%);
 }
 
-#announce{
+#announce,
+#announce-sign-in{
     display: none;
     margin-top: 10px;
     font-size: .9rem;

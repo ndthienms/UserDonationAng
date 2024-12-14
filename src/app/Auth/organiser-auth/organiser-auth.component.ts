@@ -149,12 +149,13 @@ export class OrganiserAuthComponent implements OnInit {
         localStorage.setItem('userava', userAva);
 
         console.log(res);
-        this.router.navigateByUrl('/organiser');
+        this.router.navigateByUrl('/organiser/profile/'+userId);
       },
       (err: any) => {
         console.log(err);
+        console.log(!err.error.type);
         if (!err.error.type) {
-          var announce = document.getElementById('announce');
+          var announce = document.getElementById('announce-sign-in');
           if (announce) {
             announce.style.display = "block";
             announce.innerHTML = err.error;
@@ -167,7 +168,7 @@ export class OrganiserAuthComponent implements OnInit {
           }, 4000);
         }
         else {
-          var announce = document.getElementById('announce');
+          var announce = document.getElementById('announce-sign-in');
           if (announce) {
             announce.style.display = "block";
             announce.innerHTML = "There are some errors occured";

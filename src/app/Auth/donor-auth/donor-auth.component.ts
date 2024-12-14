@@ -134,7 +134,7 @@ export class DonorAuthComponent implements OnInit {
       (err: any) => {
         console.log(err);
         if (!err.error.type) {
-          var announce = document.getElementById('announce');
+          var announce = document.getElementById('announce-sign-in');
           if (announce) {
             announce.style.display = "block";
             announce.innerHTML = err.error;
@@ -147,7 +147,7 @@ export class DonorAuthComponent implements OnInit {
           }, 4000);
         }
         else {
-          var announce = document.getElementById('announce');
+          var announce = document.getElementById('announce-sign-in');
           if (announce) {
             announce.style.display = "block";
             announce.innerHTML = "There are some errors occured";

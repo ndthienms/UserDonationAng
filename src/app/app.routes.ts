@@ -12,6 +12,8 @@ import { CampaignDetailComponent } from './Pages/donor/campaign-detail/campaign-
 import { MapComponent } from './Pages/map/map.component';
 import { OrganiserComponent } from './Pages/organiser/organiser.component';
 import { ProfileComponent } from './Pages/organiser/profile/profile.component';
+import { CampaignAddEditComponent } from './Pages/organiser/campaign-add-edit/campaign-add-edit.component';
+import { CampaignDetailOrganiserComponent } from './Pages/organiser/campaign-detail-organiser/campaign-detail-organiser.component';
 
 export const routes: Routes = [
     // {
@@ -50,6 +52,8 @@ export const routes: Routes = [
         path: 'organiser', component: OrganiserComponent,
         children: [
             { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard], data: { permittedRoles: ['organiser'] } },
+            { path: 'campaign/detail/:id', component: CampaignDetailOrganiserComponent, canActivate: [AuthGuard], data: { permittedRoles: ['organiser'] } },
+            { path: 'campaign/addedit', component: CampaignAddEditComponent, canActivate: [AuthGuard], data: { permittedRoles: ['organiser'] } },
             { path: 'organiser', redirectTo: 'profile/:id', pathMatch: 'full' },
         ]
     },

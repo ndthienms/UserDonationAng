@@ -1,6 +1,6 @@
 import { NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-donor',
@@ -9,21 +9,47 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   templateUrl: './donor.component.html',
   styleUrl: './donor.component.css'
 })
-export class DonorComponent implements OnInit{
+export class DonorComponent implements OnInit {
 
-  constructor(){
+
+  constructor(private router: Router) {
 
   }
 
-  username:string | null = null;
-  userava:string | null = null;
+  username: string | null = null;
+  userava: string | null = null;
 
-  ngOnInit(): void{
+  ngOnInit(): void {
+    // Convert res to base64
+    if (localStorage.getItem('token') != null) {
+      let base64 = localStorage.getItem('token')!.replace(/-/g, '+').replace(/_/g, '/');
+      while (base64.length % 4) {
+        base64 += '=';
+      }
+
+      var payLoad = JSON.parse(decodeURIComponent(escape(window.atob(base64!.split('.')[1]))));
+      var userRole = payLoad['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+      var userId = payLoad['Id'];
+
+      if (userRole == "donor") {
+        this.router.navigateByUrl('/');
+      }
+      else if (userRole == "organiser") {
+        this.router.navigateByUrl('/organiser/profile/' + userId);
+      }
+      else if (userRole == "recipient") {
+        this.router.navigateByUrl('/recipient');
+      }
+      else {
+        this.Logout();
+      }
+    }
+
     let first_topic_icon = document.querySelector(".first-topic-icon");
     first_topic_icon?.classList.add("active");
   }
 
-  ProfileOpen(){
+  ProfileOpen() {
     let profile = document.querySelector(".profile");
     let notification = document.querySelector(".notifications");
 
@@ -31,7 +57,7 @@ export class DonorComponent implements OnInit{
     notification?.classList.remove("active");
   }
 
-  NotificationOpen(){
+  NotificationOpen() {
     let profile = document.querySelector(".profile");
     let notification = document.querySelector(".notifications");
 
@@ -39,9 +65,9 @@ export class DonorComponent implements OnInit{
     profile?.classList.remove("active");
   }
 
-  ActiveTopic(event:any){
+  ActiveTopic(event: any) {
     let topicIcons = document.querySelectorAll(".topic-icon");
-    topicIcons.forEach(item=>{
+    topicIcons.forEach(item => {
       item.classList.remove("active");
       if (item == event.target.parentElement) {
         item.classList.add("active");
@@ -50,7 +76,7 @@ export class DonorComponent implements OnInit{
   }
 
   Loggedin() {
-    if(localStorage.getItem('token')){
+    if (localStorage.getItem('token')) {
       this.username = localStorage.getItem('username');
       this.userava = localStorage.getItem('userava')
     }
@@ -58,7 +84,7 @@ export class DonorComponent implements OnInit{
     return localStorage.getItem('token');
   }
 
-  Logout(){
+  Logout() {
     localStorage.removeItem("username");
     localStorage.removeItem("userava");
     localStorage.removeItem("userid")

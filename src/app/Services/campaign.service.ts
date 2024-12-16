@@ -22,6 +22,18 @@ export class CampaignService {
     );
   }
 
+  GetSearchedListByOrganiser(pageIndex: any, searchForm: any) {
+    return this.http.post(this.baseUrl + '/GetSearchedListByOrganiser/' + pageIndex, searchForm,
+      {
+        reportProgress: true,
+        observe: 'events',
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      },
+    );
+  }
+
   GetById(campaignId: any) {
     return this.http.get(this.baseUrl + '/GetById/' + campaignId,
       {
@@ -30,6 +42,24 @@ export class CampaignService {
         headers: new HttpHeaders({
           'Content-Type': 'application/json'
         })
+      },
+    );
+  }
+
+  Add(cuFormData: any) {
+    return this.http.post(this.baseUrl + '/Add', cuFormData,
+      {
+        reportProgress: true,
+        observe: 'events'
+      },
+    );
+  }
+
+  Update(campaignId: any, cuFormData: any) {
+    return this.http.put(this.baseUrl + '/Update/' + campaignId, cuFormData,
+      {
+        reportProgress: true,
+        observe: 'events'
       },
     );
   }

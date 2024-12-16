@@ -217,22 +217,35 @@
                                         <div class="table-container">
                                             <table>
                                                 <thead>
-                                                    <tr>
-                                                        <th>Id</th>
-                                                        <th>Name</th>
-                                                        <th>Phone number</th>
-                                                        <th>Email</th>
-                                                    </tr>
+                                                  <tr>
+                                                    <th>ID</th>
+                                                    <th>Description</th>
+                                                    <th>Expense date</th>
+                                                    <th>Amount</th>
+                                                    <th *ngIf="isOrganiser">Action</th>
+                                                  </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td><a href="#">123</a></td>
-                                                        <td>ABC</td>
-                                                        <td>0989765679</td>
-                                                        <td>email&#64;gmail.com</td>
-                                                    </tr>
+                                                  <tr *ngFor="let expense of expenses">
+                                                    <td>{{ expense.id }}</td>
+                                                    <td *ngIf="editingExpense?.id !== expense.id">{{ expense.description }}</td>
+                                                    <td *ngIf="editingExpense?.id !== expense.id">{{ expense.expenseDate | date }}</td>
+                                                    <td *ngIf="editingExpense?.id !== expense.id">{{ expense.amount | number }}</td>
+                                          
+                                                    <td *ngIf="editingExpense?.id === expense.id">
+                                                      <input [(ngModel)]="editingExpense.description" />
+                                                      <input [(ngModel)]="editingExpense.expenseDate" type="date" />
+                                                      <input [(ngModel)]="editingExpense.amount" type="number" />
+                                                      <button (click)="saveEditExpense()">Lưu</button>
+                                                    </td>
+                                          
+                                                    <td *ngIf="isOrganiser">
+                                                      <button *ngIf="editingExpense?.id !== expense.id" (click)="editExpense(expense)">Sửa</button>
+                                                      <button *ngIf="editingExpense?.id !== expense.id" (click)="deleteExpense(expense.id)">Xóa</button>
+                                                    </td>
+                                                  </tr>
                                                 </tbody>
-                                            </table>
+                                              </table>
                                         </div>
                                         <div class="load-more"><button>Xem thêm</button></div>
                                     </div>

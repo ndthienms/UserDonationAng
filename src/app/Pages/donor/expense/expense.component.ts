@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ExpenseService } from 'src/app/Services/expense.service';
-import { AuthService } from 'src/app/Services/auth.service';
+import { ExpenseService } from './expense.service';
+// import { ExpenseService } from 'src/app/Services/expense.service';
+// import { AuthService } from 'src/app/Services/auth.service';
 
 @Component({
   selector: 'app-expense-list',
@@ -22,10 +23,10 @@ export class ExpenseListComponent implements OnInit {
   };
   editingExpense: any = null;
 
-  constructor(private expenseService: ExpenseService, private authService: AuthService) {}
+  constructor(private expenseService: ExpenseService) {}
 
   ngOnInit(): void {
-    this.isOrganiser = this.authService.isOrganiser(this.campaignId);
+    // this.isOrganiser = this.authService.isOrganiser(this.campaignId);
     this.loadExpenses();
   }
 

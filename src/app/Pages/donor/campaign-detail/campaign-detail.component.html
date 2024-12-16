@@ -175,8 +175,7 @@
                                                 <!-- Button Form -->
                                                 <div class="button-form">
                                                     <button type="submit">Tìm</button>
-                                                    <button (click)="ExportDonationFile()" class="download"
-                                                        type="submit">Xuất Excel</button>
+                                                    <button class="download" (click)="exportDonationFile()">Xuất Excel</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -205,13 +204,10 @@
                                     </div>
 
                                     <!-- Expense Table -->
-                                    <div class="tab-content-div">
-                                        <!-- Filter Form -->
+                                    <!-- <div class="tab-content-div">
                                         <div class="filter-container">
-                                            <!-- Button Form -->
                                             <div class="button-form expesne-button-form">
-                                                <button (click)="ExportExpenseFile()" class="download expense-download"
-                                                    type="submit">Xuất Excel</button>
+                                                <button class="download" (click)="exportExpenseFile()">Xuất Excel</button>
                                             </div>
                                         </div>
                                         <div class="table-container">
@@ -248,7 +244,7 @@
                                               </table>
                                         </div>
                                         <div class="load-more"><button>Xem thêm</button></div>
-                                    </div>
+                                    </div> -->
 
                                     <!-- Rating -->
                                     <div class="tab-content-div">

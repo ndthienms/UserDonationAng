@@ -63,4 +63,28 @@ export class CampaignService {
       },
     );
   }
+
+  exportDonations(campaignId: number, startDate: string, endDate: string) {
+    const endpoint = `${this.baseUrl}/ExportDonationsToExcel?`;
+    const params = {campaignId, startDate, endDate };
+    return this.http.get(endpoint, { params, responseType: 'blob' });
+  }
+
+  exportExpenses(campaignId: number,startDate: string, endDate: string) {
+    const endpoint = `${this.baseUrl}/ExportExpenseToExcel?`;
+    const params = { campaignId, startDate, endDate };
+    return this.http.get(endpoint, { params, responseType: 'blob' });
+  }
+
+  downloadFile(response: Blob, filename: string) {
+    const blob = new Blob([response], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
 }

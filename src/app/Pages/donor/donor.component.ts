@@ -1,6 +1,11 @@
 import { NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { getToken, Messaging, onMessage } from '@angular/fire/messaging';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { UserTokenService } from '../../Services/user-token.service';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-donor',
@@ -11,10 +16,16 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 })
 export class DonorComponent implements OnInit {
 
-
-  constructor(private router: Router) {
+  constructor(private userTokenService: UserTokenService,
+    private router: Router) {
 
   }
+
+  // FCM Push Notification
+  private readonly _messaging = inject(Messaging);
+  private readonly _message = new BehaviorSubject<unknown | undefined>(undefined);
+  message$ = this._message.asObservable();
+  payload: string | null = null;
 
   username: string | null = null;
   userava: string | null = null;
@@ -47,6 +58,56 @@ export class DonorComponent implements OnInit {
 
     let first_topic_icon = document.querySelector(".first-topic-icon");
     first_topic_icon?.classList.add("active");
+
+    // FCM Push Notification
+    this.GetTokenFcm();
+    onMessage(this._messaging, (payload) => {
+      console.log('Message received. ', payload);
+      // You can show a notification or update the UI based on the payload
+    });
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/firebase-messaging-sw.js')
+        .then((registration) => {
+          console.log('Service Worker registered with scope:', registration.scope);
+        })
+        .catch((err) => {
+          console.error('Service Worker registration failed:', err);
+        });
+      navigator.serviceWorker.addEventListener('message', (event) => {
+        // console.log("ServiceWork: ", event.data);
+        // if(event.data.type === "Background_Message"){
+        //   console.log("ServiceWork: ", event.data.payload)
+        // }
+
+        const payload = event.data;
+        console.log("SvNo: ", payload.notification);
+      })
+    }
+  }
+
+  // FCM Push Notification
+  GetTokenFcm() {
+    if (localStorage.getItem("fcmtoken") == null) {
+      getToken(this._messaging, { vapidKey: environment.firebaseConfig.vapidKey })
+        .then((token) => {
+          console.log(token)
+          localStorage.setItem("fcmtoken", token);
+          this.userTokenService.Add(JSON.stringify(token)).subscribe(
+            (res: any) => {
+              if (res.type === HttpEventType.Response) {
+                console.log(res);
+              }
+            },
+            (err: any) => {
+              console.log(err);
+            }
+          );
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
   }
 
   ProfileOpen() {
@@ -89,5 +150,6 @@ export class DonorComponent implements OnInit {
     localStorage.removeItem("userava");
     localStorage.removeItem("userid")
     localStorage.removeItem("token");
+    localStorage.removeItem("fcmtoken");
   }
 }

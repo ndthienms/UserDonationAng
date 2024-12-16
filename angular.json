@@ -25,7 +25,8 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+              "src/firebase-messaging-sw.js"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -50,6 +51,12 @@
                   "type": "anyComponentStyle",
                   "maximumWarning": "2kB",
                   "maximumError": "4kB"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.ts"
                 }
               ],
               "outputHashing": "all"

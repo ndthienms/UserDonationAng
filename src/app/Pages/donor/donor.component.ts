@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { getToken, Messaging, onMessage } from '@angular/fire/messaging';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
@@ -6,17 +6,19 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { UserTokenService } from '../../Services/user-token.service';
 import { HttpEventType } from '@angular/common/http';
+import { NotificationService } from '../../Services/notification.service';
 
 @Component({
   selector: 'app-donor',
   standalone: true,
-  imports: [RouterOutlet, NgIf, RouterLink],
+  imports: [RouterOutlet, NgIf, RouterLink, NgFor],
   templateUrl: './donor.component.html',
   styleUrl: './donor.component.css'
 })
 export class DonorComponent implements OnInit {
 
   constructor(private userTokenService: UserTokenService,
+    private notificationService: NotificationService,
     private router: Router) {
 
   }
@@ -26,6 +28,13 @@ export class DonorComponent implements OnInit {
   private readonly _message = new BehaviorSubject<unknown | undefined>(undefined);
   message$ = this._message.asObservable();
   payload: string | null = null;
+
+  pageIndexNoti: number = 0;
+  requestNoti: boolean = true;
+  responseNoti: any;
+  notiList: Array<any> = [];
+  notiNum: number = 0;
+  openedNoti: boolean = false;
 
   username: string | null = null;
   userava: string | null = null;
@@ -43,6 +52,7 @@ export class DonorComponent implements OnInit {
       var userId = payLoad['Id'];
 
       if (userRole == "donor") {
+        this.CheckReadLatestNotification();
         this.router.navigateByUrl('/');
       }
       else if (userRole == "organiser") {
@@ -75,13 +85,16 @@ export class DonorComponent implements OnInit {
           console.error('Service Worker registration failed:', err);
         });
       navigator.serviceWorker.addEventListener('message', (event) => {
-        // console.log("ServiceWork: ", event.data);
-        // if(event.data.type === "Background_Message"){
-        //   console.log("ServiceWork: ", event.data.payload)
-        // }
-
         const payload = event.data;
         console.log("SvNo: ", payload.notification);
+
+        let bell = document.getElementById("bell_noti");
+        if (this.notiNum == 0) {
+          bell?.classList.add("bell");
+        }
+        this.notiNum += 1;
+        bell?.setAttribute('current-count', this.notiNum + "")
+
       })
     }
   }
@@ -110,6 +123,47 @@ export class DonorComponent implements OnInit {
     }
   }
 
+  // Notification
+  CheckReadLatestNotification() {
+    this.notificationService.CheckReadLatestNotification().subscribe(
+      (res: any) => {
+        if (res.type === HttpEventType.Response) {
+          this.notiNum = res.body;
+          if (this.notiNum > 0) {
+            let bell = document.getElementById("bell_noti");
+            bell?.setAttribute('current-count', this.notiNum + "")
+            bell?.classList.add("bell");
+          }
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
+  GetNotification() {
+    if (this.requestNoti) {
+      this.pageIndexNoti += 1;
+      this.notificationService.Get(this.pageIndexNoti).subscribe(
+        (res: any) => {
+          if (res.type === HttpEventType.Response) {
+            this.responseNoti = res.body.$values;
+            if (this.responseNoti.length < 3) {
+              this.requestNoti = false;
+            }
+            this.notiList = this.notiList.concat(this.responseNoti);
+            console.log(this.requestNoti);
+            console.log(res);
+          }
+        },
+        err => {
+          console.log(err);
+        }
+      )
+    }
+  }
+
   ProfileOpen() {
     let profile = document.querySelector(".profile");
     let notification = document.querySelector(".notifications");
@@ -124,6 +178,16 @@ export class DonorComponent implements OnInit {
 
     notification?.classList.toggle("active");
     profile?.classList.remove("active");
+
+    if (!this.openedNoti) {
+      this.notiNum = 0;
+      let bell = document.getElementById("bell_noti");
+      bell?.setAttribute('current-count', this.notiNum + "")
+      bell?.classList.remove("bell");
+
+      this.GetNotification();
+      this.openedNoti = !this.openedNoti;
+    }
   }
 
   ActiveTopic(event: any) {

@@ -5,7 +5,8 @@ firebase.initializeApp({
     apiKey: "AIzaSyAJoExvhrKFzKpw6j67s2qPgsIQfFuK6cE",
     authDomain: "donationpushnotification.firebaseapp.com",
     projectId: "donationpushnotification",
-    storageBucket: "donationpushnotification.appspot.com",
+    // storageBucket: "donationpushnotification.appspot.com",
+    storageBucket: "donationpushnotification.firebasestorage.app",
     messagingSenderId: "662459039023",
     appId: "1:662459039023:web:56da5e09fc3d15a29af5da"
 });

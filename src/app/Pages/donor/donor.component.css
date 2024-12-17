@@ -105,8 +105,35 @@
 }
 
 .header-wrapper .navbar .navbar_right .notifications .icon_wrap {
-    font-size: 25px;
-    color: #8f98a3;
+    cursor: pointer;
+    position: relative;
+    font-size: 22px;
+}
+
+.bell::after{
+    content: attr(current-count);
+    position: absolute;
+    top: 0px;
+    left: 55%;
+    width: 18px;
+    height: 18px;
+    background-color: #ff0080;
+    border-radius: 50%;
+    display: grid;
+    place-content: center;
+    /* align-items: center; */
+    /* border: 5px solid #a3b1c1; */
+    /* font-size: 22px; */
+    /* font-weight: bold; */
+    color: #fff;
+    font-size: 13px;
+}
+
+.header-wrapper .notification_dd{
+    width: 280px;
+    height: 343px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .header-wrapper .notification_dd li {
@@ -135,6 +162,9 @@
 .header-wrapper .notification_dd li .notify_data .title {
     color: #000;
     font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .header-wrapper .notification_dd li .notify_data .sub_title {
@@ -142,6 +172,12 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin-top: 5px;
+}
+
+.header-wrapper .notification_dd li .notify_data .sub_title_date{
+    color: #a3b1c1;
+    font-size: 12px;
     margin-top: 5px;
 }
 

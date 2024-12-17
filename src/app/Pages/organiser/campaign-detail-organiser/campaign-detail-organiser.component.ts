@@ -128,7 +128,7 @@ export class CampaignDetailOrganiserComponent implements OnInit {
     )
   }
 
-  UpdateCampaign(campaign:any){
+  UpdateCampaign(campaign: any) {
     this.sharedService.campaign = campaign;
     this.router.navigateByUrl('/organiser/campaign/addedit');
   }
@@ -281,12 +281,96 @@ export class CampaignDetailOrganiserComponent implements OnInit {
     }
   }
 
-  ExportDonationFile() {
+  //Export File Excell Donation and Expensese
+  startDate!: string; // Ngày bắt đầu
+  endDate!: string;   // Ngày kết thúc
+  exportDonationFile() {
+    const campaignId = this.campaign?.id;
 
+    if (!campaignId) {
+      alert('Không tìm thấy ID của chiến dịch.');
+      return;
+    }
+
+    // Lấy giá trị từ form group
+    this.startDate = this.donationSearchForm.get('fromdate')?.value;
+    this.endDate = this.donationSearchForm.get('todate')?.value;
+
+    // Kiểm tra giá trị trước khi gọi API
+    if (!this.startDate || !this.endDate) {
+      alert('Vui lòng chọn ngày bắt đầu và ngày kết thúc hợp lệ.');
+      return;
+    }
+
+    // Gọi API xuất file với campaignId
+    this.campaignService.exportDonations(campaignId, this.startDate, this.endDate).subscribe(
+      (response) => {
+        this.campaignService.downloadFile(response, `Donations_Campaign_${campaignId}.xlsx`);
+      },
+      (error) => {
+        console.error('Lỗi khi xuất file Donations:', error);
+      }
+    );
   }
 
-  ExportExpenseFile() {
+  //   exportDonationFile(campaignId: any) {
+  //     // Lấy giá trị từ form group
 
+  //     this.startDate = this.donationSearchForm.get('fromdate')?.value;
+  //     this.endDate = this.donationSearchForm.get('todate')?.value;
+
+  //     // Kiểm tra giá trị trước khi gọi API
+  //     if (!this.startDate || !this.endDate) {
+  //         alert('Vui lòng chọn ngày bắt đầu và ngày kết thúc hợp lệ.');
+  //         return;
+  //     }
+
+  //     // Gọi API xuất file với campaignId
+  //     this.campaignService.exportDonations(campaignId, this.startDate, this.endDate).subscribe(
+  //         (response) => {
+  //             this.campaignService.downloadFile(response, `Donations_Campaign_${campaignId}.xlsx`);
+  //         },
+  //         (error) => {
+  //             console.error('Lỗi khi xuất file Donations:', error);
+  //         }
+  //     );
+  // }
+
+
+  //   // Gọi API xuất file
+  //   this.campaignService.exportDonations(this.startDate, this.endDate).subscribe(
+  //     (response) => {
+  //       this.campaignService.downloadFile(response, 'Donations.xlsx');
+  //     },
+  //     (error) => {
+  //       console.error('Lỗi khi xuất file Donations:', error);
+  //     }
+  //   );
+  // }
+
+  exportExpenseFile() {
+    const campaignId = this.campaign?.id;
+
+    if (!campaignId) {
+      alert('Không tìm thấy ID của chiến dịch.');
+      return;
+    }
+    this.startDate = this.donationSearchForm.get('fromdate')?.value;
+    this.endDate = this.donationSearchForm.get('todate')?.value;
+
+    if (!this.startDate || !this.endDate) {
+      alert('Vui lòng chọn ngày bắt đầu và ngày kết thúc hợp lệ.');
+      return;
+    }
+
+    this.campaignService.exportExpenses(campaignId, this.startDate, this.endDate).subscribe(
+      (response) => {
+        this.campaignService.downloadFile(response, `Expenses_${campaignId}.xlsx`);
+      },
+      (error) => {
+        console.error('Lỗi khi xuất file Expenses:', error);
+      }
+    );
   }
 
   // ----- Design -----

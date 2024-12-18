@@ -343,7 +343,7 @@ export class CampaignDetailComponent implements OnInit {
           this.ratingList = this.ratingList.concat(this.ratingResponse);
           console.log(res);
         },
-        err => {
+        (err:any) => {
           console.log(err);
         }
       )

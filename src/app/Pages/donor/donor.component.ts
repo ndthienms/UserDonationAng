@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { UserTokenService } from '../../Services/user-token.service';
 import { HttpEventType } from '@angular/common/http';
 import { NotificationService } from '../../Services/notification.service';
+import { SharedService } from '../../Shared/shared.service';
 
 @Component({
   selector: 'app-donor',
@@ -19,6 +20,7 @@ export class DonorComponent implements OnInit {
 
   constructor(private userTokenService: UserTokenService,
     private notificationService: NotificationService,
+    public sharedService: SharedService,
     private router: Router) {
 
   }
@@ -53,7 +55,7 @@ export class DonorComponent implements OnInit {
 
       if (userRole == "donor") {
         this.CheckReadLatestNotification();
-        this.router.navigateByUrl('/');
+        // this.router.navigateByUrl('/');
       }
       else if (userRole == "organiser") {
         this.router.navigateByUrl('/organiser/profile/' + userId);

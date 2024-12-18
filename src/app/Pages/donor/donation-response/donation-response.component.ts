@@ -1,6 +1,7 @@
 import { NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { SharedService } from '../../../Shared/shared.service';
 
 @Component({
   selector: 'app-donation-response',

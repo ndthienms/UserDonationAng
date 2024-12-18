@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-organiser',
@@ -10,7 +10,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 })
 export class OrganiserComponent implements OnInit{
 
-  constructor(){
+  constructor(private router: Router){
 
   }
 
@@ -44,5 +44,7 @@ export class OrganiserComponent implements OnInit{
     localStorage.removeItem("userava");
     localStorage.removeItem("userid")
     localStorage.removeItem("token");
+
+    this.router.navigateByUrl('/');
   }
 }

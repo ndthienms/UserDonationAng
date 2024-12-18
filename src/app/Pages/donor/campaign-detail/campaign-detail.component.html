@@ -175,7 +175,8 @@
                                                 <!-- Button Form -->
                                                 <div class="button-form">
                                                     <button type="submit">Tìm</button>
-                                                    <button class="download" (click)="exportDonationFile()">Xuất Excel</button>
+                                                    <button class="download" (click)="exportDonationFile()">Xuất
+                                                        Excel</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -206,31 +207,49 @@
                                     <!-- Expense Table -->
                                     <div class="tab-content-div">
                                         <div class="filter-container">
-                                            <div class="button-form expesne-button-form">
-                                                <button class="download expense-download" (click)="exportExpenseFile()">Xuất Excel</button>
-                                            </div>
+                                            <form [formGroup]="expenseSearchForm" (ngSubmit)="exportExpenseFile()"
+                                                class="form" action="">
+                                                <!-- Date Form -->
+                                                <div class="column">
+                                                    <div class="input-box">
+                                                        <label>From Date: </label>
+                                                        <input formControlName="fromdate" id="startdate" type="date"
+                                                            placeholder="Enter start date" required />
+                                                    </div>
+                                                    <div class="input-box">
+                                                        <label>To Date: </label>
+                                                        <input formControlName="todate" id="enddate" type="date"
+                                                            placeholder="Enter end date" required />
+                                                    </div>
+                                                </div>
+                                                <div class="button-form expesne-button-form">
+                                                    <button type="submit" class="download expense-download"
+                                                        >Xuất Excel</button>
+                                                </div>
+                                            </form>
+                                            
                                         </div>
                                         <div class="table-container">
                                             <table>
                                                 <thead>
-                                                  <tr>
-                                                    <th>ID</th>
-                                                    <th>Description</th>
-                                                    <th>Expense date</th>
-                                                    <th>Amount</th>
-                                                  </tr>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Description</th>
+                                                        <th>Expense date</th>
+                                                        <th>Amount</th>
+                                                    </tr>
                                                 </thead>
                                                 <tbody>
-                                                  <!-- <tr *ngFor="let expense of expenses">
-                                                    <td>{{ expense.id }}</td>
-                                                    <td>{{ expense.description }}</td>
-                                                    <td>{{ expense.expenseDate | date }}</td>
-                                                    <td>{{ expense.amount | number }}</td>
-                                                  </tr> -->
+                                                    <tr *ngFor="let expense of expenseList">
+                                                        <td>{{ expense.id }}</td>
+                                                        <td>{{ expense.description }}</td>
+                                                        <td>{{ expense.expenseDate }}</td>
+                                                        <td>{{ expense.amount }}</td>
+                                                    </tr>
                                                 </tbody>
-                                              </table>
+                                            </table>
                                         </div>
-                                        <div class="load-more"><button>Xem thêm</button></div>
+                                        <!-- <div class="load-more"><button>Xem thêm</button></div> -->
                                     </div>
 
                                     <!-- Rating -->
@@ -243,8 +262,7 @@
                                                 <div class="box-top">
                                                     <div class="profile">
                                                         <div class="profile-image">
-                                                            <img src={{rate.donorAva}}
-                                                                alt="">
+                                                            <img src={{rate.donorAva}} alt="">
                                                         </div>
                                                         <div class="name-user">
                                                             <strong>{{rate.donorName}}</strong>
@@ -254,13 +272,17 @@
                                                     <div class="reviews">
                                                         <i class='bi bi-star-fill star'></i>
                                                         <i *ngIf="2 > rate.rate" class='bi bi-star star'></i>
-                                                        <i *ngIf="rate.rate > 2 || rate.rate == 2" class='bi bi-star-fill star'></i>
+                                                        <i *ngIf="rate.rate > 2 || rate.rate == 2"
+                                                            class='bi bi-star-fill star'></i>
                                                         <i *ngIf="3 > rate.rate" class='bi bi-star star'></i>
-                                                        <i *ngIf="rate.rate > 3 || rate.rate == 3" class='bi bi-star-fill star'></i>
+                                                        <i *ngIf="rate.rate > 3 || rate.rate == 3"
+                                                            class='bi bi-star-fill star'></i>
                                                         <i *ngIf="4 > rate.rate" class='bi bi-star star'></i>
-                                                        <i *ngIf="rate.rate > 4 || rate.rate == 4" class='bi bi-star-fill star'></i>
+                                                        <i *ngIf="rate.rate > 4 || rate.rate == 4"
+                                                            class='bi bi-star-fill star'></i>
                                                         <i *ngIf="5 > rate.rate" class='bi bi-star star'></i>
-                                                        <i *ngIf="rate.rate > 5 || rate.rate == 5" class='bi bi-star-fill star'></i>
+                                                        <i *ngIf="rate.rate > 5 || rate.rate == 5"
+                                                            class='bi bi-star-fill star'></i>
                                                     </div>
                                                 </div>
 
@@ -268,7 +290,7 @@
                                                     <p>{{rate.content}}</p>
                                                 </div>
                                             </div>
-                                            <button (click)="GetRatingList()" >Xem thêm</button>
+                                            <button (click)="GetRatingList()">Xem thêm</button>
                                         </div>
                                         <!-- Rate Form -->
                                         <div class="rate-wrapper">
@@ -287,8 +309,8 @@
                                                     <i (click)="StartChange(5)" class='bi bi-star star'
                                                         style="--i: 4;"></i>
                                                 </div>
-                                                <textarea id="rate-comment" formControlName="comment" name="opinion" cols="30" rows="5"
-                                                    placeholder="Your opinion..."></textarea>
+                                                <textarea id="rate-comment" formControlName="comment" name="opinion"
+                                                    cols="30" rows="5" placeholder="Your opinion..."></textarea>
                                                 <div class="btn-group">
                                                     <button type="submit" class="btn submit">Submit</button>
                                                     <button (click)="InitRateForm()" class="btn cancel">Cancel</button>

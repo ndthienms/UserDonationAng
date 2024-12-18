@@ -4,6 +4,7 @@ import { CampaignStatisticsService } from '../../../Services/campaign-statistics
 import { ImageCampaignService } from '../../../Services/image-campaign.service';
 import { DonationService } from '../../../Services/donation.service';
 import { RateCampaignService } from '../../../Services/rate-campaign.service';
+import { ExpenseService } from '../../../Services/expense.service';
 import { SharedService } from '../../../Shared/shared.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -24,6 +25,7 @@ export class CampaignDetailOrganiserComponent implements OnInit {
     private imageCampaignService: ImageCampaignService,
     private donationService: DonationService,
     private rateCampaignService: RateCampaignService,
+    private expenseService: ExpenseService,
     public sharedService: SharedService,
     private router: Router,
     private route: ActivatedRoute
@@ -37,9 +39,11 @@ export class CampaignDetailOrganiserComponent implements OnInit {
   userId: any;
 
   campaign: any;
+
   donatedTotal: number = 0;
   expensedTotal: number = 0;
   transferedTotal: number = 0;
+
   images1: Array<any> = [];
   images2: Array<any> = [];
   images3: Array<any> = [];
@@ -61,6 +65,11 @@ export class CampaignDetailOrganiserComponent implements OnInit {
   ratingRequest: boolean = true;
   ratingList: Array<any> = [];
 
+  expenseList: Array<any> = [];
+  expenseSearchForm: FormGroup = new FormGroup({});
+  expenseForm: FormGroup = new FormGroup({});
+  expense:any;
+
 
   ngOnInit(): void {
 
@@ -79,6 +88,10 @@ export class CampaignDetailOrganiserComponent implements OnInit {
 
     this.StartConnection();
     this.Listener();
+
+    this.GetExpenseList();
+    this.InitExpenseSearch()
+    this.InitExpenseForm()
   }
 
   // SignalR Hub
@@ -258,6 +271,106 @@ export class CampaignDetailOrganiserComponent implements OnInit {
     });
   }
 
+  GetExpenseList(){
+    var id = this.route.snapshot.paramMap.get('id');
+    var campaignId: number = +id!;
+
+    this.expenseService.GetListByCampaign(campaignId).subscribe(
+      (res: any) => {
+        let response = res.body.$values;
+        this.expenseList = this.expenseList.concat(response);
+        console.log(this.expenseList);
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
+  private InitExpenseSearch(): void {
+    this.expenseSearchForm = new FormGroup({
+      'fromdate': new FormControl("", Validators.required),
+      'todate': new FormControl("", Validators.required)
+    });
+  }
+
+  private InitExpenseForm(): void {
+    this.expenseForm = new FormGroup({
+      'description': new FormControl(null, Validators.required),
+      'expensedate': new FormControl(null, Validators.required),
+      'amount': new FormControl(null, Validators.required)
+    });
+  }
+
+  AddExpenseSubmit(){
+    var id = this.route.snapshot.paramMap.get('id');
+    var campaignId: number = +id!;
+
+    this.expenseService.Add(campaignId, this.expenseForm.value).subscribe(
+      (res: any) => {
+        if (res.type === HttpEventType.Response) {
+          let response = res.body;
+          this.expenseList = this.expenseList.concat(response);
+
+          this.expensedTotal += this.expenseForm.value.amount;
+
+          this.InitExpenseForm();
+          this.AddExpenseClose();
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
+  DeleteExpense(){
+    var id = this.route.snapshot.paramMap.get('id');
+    var campaignId: number = +id!;
+
+    this.expenseService.Delete(this.expense.id, campaignId, this.expense).subscribe(
+      (res: any) => {
+        if (res.type === HttpEventType.Response) {
+          // let response = res.body;
+
+          this.expenseList.forEach((item, index) => {
+            if (item.id == this.expense.id) this.expenseList.splice(index, 1);
+          });
+
+          this.expensedTotal -= this.expense.amount;
+          this.InitExpenseForm();
+          this.DeleteExpenseConfirmationClose();
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
+  AddExpensePopUp(){
+    let section = document.getElementById("add-form-container");
+    section?.classList.add("active");
+  }
+
+  AddExpenseClose(){
+    let section = document.getElementById("add-form-container");
+    section?.classList.remove("active");
+
+    this.InitExpenseForm();
+  }
+
+  DeleteExpenseConfirmationPopUp(expense:any) {
+    this.expense = expense;
+    let section = document.getElementById("confirmation");
+    section?.classList.add("active");
+  }
+
+  DeleteExpenseConfirmationClose() {
+    let section = document.getElementById("confirmation");
+    section?.classList.remove("active");
+  }
+
   GetRatingList() {
     if (this.ratingRequest) {
       this.ratingPageIndex += 1;
@@ -355,8 +468,8 @@ export class CampaignDetailOrganiserComponent implements OnInit {
       alert('Không tìm thấy ID của chiến dịch.');
       return;
     }
-    this.startDate = this.donationSearchForm.get('fromdate')?.value;
-    this.endDate = this.donationSearchForm.get('todate')?.value;
+    this.startDate = this.expenseSearchForm.get('fromdate')?.value;
+    this.endDate = this.expenseSearchForm.get('todate')?.value;
 
     if (!this.startDate || !this.endDate) {
       alert('Vui lòng chọn ngày bắt đầu và ngày kết thúc hợp lệ.');

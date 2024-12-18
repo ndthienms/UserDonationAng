@@ -12,6 +12,7 @@ import { DonationService } from '../../../Services/donation.service';
 
 import * as signalR from '@microsoft/signalr';
 import { RateCampaignService } from '../../../Services/rate-campaign.service';
+import { ExpenseService } from '../../../Services/expense.service';
 
 @Component({
   selector: 'app-campaign-detail',
@@ -28,6 +29,7 @@ export class CampaignDetailComponent implements OnInit {
     private campaignParticipantService: CampaignParticipantService,
     private donationService: DonationService,
     private rateCampaignService: RateCampaignService,
+    private expenseService: ExpenseService,
     public sharedService: SharedService,
     private router: Router,
     private route: ActivatedRoute
@@ -62,6 +64,9 @@ export class CampaignDetailComponent implements OnInit {
   donationList: Array<any> = [];
   donationSearchForm: FormGroup = new FormGroup({});
 
+  expenseList: Array<any> = [];
+  expenseSearchForm: FormGroup = new FormGroup({});
+
   ratingPageIndex: number = 0;
   ratingResponse: any;
   ratingRequest: boolean = true;
@@ -74,15 +79,20 @@ export class CampaignDetailComponent implements OnInit {
     this.userId = localStorage.getItem("userid");
 
     this.GetCampaign();
+    this.CheckParticipated();
+
     this.GetTotal();
     this.GetImages(1);
     this.GetImages(2);
     this.GetImages(3);
-    this.CheckParticipated();
+
     this.InitDonationSearch();
     this.GetDonationList();
     this.GetRatingList();
     this.InitRateForm();
+
+    this.GetExpenseList();
+    this.InitExpenseSearch()
 
     this.StartConnection();
     this.Listener();
@@ -257,6 +267,29 @@ export class CampaignDetailComponent implements OnInit {
         }
       )
     }
+  }
+
+  GetExpenseList(){
+    var id = this.route.snapshot.paramMap.get('id');
+    var campaignId: number = +id!;
+
+    this.expenseService.GetListByCampaign(campaignId).subscribe(
+      (res: any) => {
+        let response = res.body.$values;
+        this.expenseList = this.expenseList.concat(response);
+        console.log(this.expenseList);
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
+  private InitExpenseSearch(): void {
+    this.expenseSearchForm = new FormGroup({
+      'fromdate': new FormControl("", Validators.required),
+      'todate': new FormControl("", Validators.required)
+    });
   }
 
   DonateActiveLink(campaign: any) {
@@ -495,8 +528,8 @@ export class CampaignDetailComponent implements OnInit {
       alert('Không tìm thấy ID của chiến dịch.');
       return;
     }
-    this.startDate = this.donationSearchForm.get('fromdate')?.value;
-    this.endDate = this.donationSearchForm.get('todate')?.value;
+    this.startDate = this.expenseSearchForm.get('fromdate')?.value;
+    this.endDate = this.expenseSearchForm.get('todate')?.value;
 
     if (!this.startDate || !this.endDate) {
       alert('Vui lòng chọn ngày bắt đầu và ngày kết thúc hợp lệ.');

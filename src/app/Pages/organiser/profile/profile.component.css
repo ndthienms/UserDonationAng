@@ -175,6 +175,8 @@
 
 .about-img img{
     width: 90%;
+    height: 90%;
+    object-fit: cover;
     border-radius: 50%;
     border: .2rem solid #1d4f96;
 }

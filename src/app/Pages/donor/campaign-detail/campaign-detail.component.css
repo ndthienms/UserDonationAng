@@ -615,8 +615,7 @@ table {
     color: #1d3762;
 }
 
-.filter-container .form .button-form .download,
-.button-form .download{
+.filter-container .form .button-form .download:nth-child(2){
     margin-top: 2rem;
     background-color: #d0fcdf;
 }
@@ -624,12 +623,13 @@ table {
 .expesne-button-form{
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: center;
     width: 100%;
 }
 
-.expense-download{
+.filter-container .form .button-form .expense-download{
     width: 100px;
+    background-color: #d0fcdf;
 }
 
 /* Rating */

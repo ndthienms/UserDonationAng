@@ -4,6 +4,7 @@ import { CampaignStatisticsService } from '../../../Services/campaign-statistics
 import { ImageCampaignService } from '../../../Services/image-campaign.service';
 import { DonationService } from '../../../Services/donation.service';
 import { RateCampaignService } from '../../../Services/rate-campaign.service';
+import { ExpenseService } from '../../../Services/expense.service';
 import { SharedService } from '../../../Shared/shared.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgFor, NgIf, NgOptimizedImage } from '@angular/common';
@@ -18,12 +19,13 @@ import { HttpEventType } from '@angular/common/http';
   templateUrl: './campaign-detail-recipient.component.html',
   styleUrl: './campaign-detail-recipient.component.css'
 })
-export class CampaignDetailRecipientComponent implements OnInit{
-constructor(private campaignService: CampaignService,
+export class CampaignDetailRecipientComponent implements OnInit {
+  constructor(private campaignService: CampaignService,
     private campaignStatisticsService: CampaignStatisticsService,
     private imageCampaignService: ImageCampaignService,
     private donationService: DonationService,
     private rateCampaignService: RateCampaignService,
+    private expenseService: ExpenseService,
     public sharedService: SharedService,
     private router: Router,
     private route: ActivatedRoute
@@ -64,20 +66,30 @@ constructor(private campaignService: CampaignService,
   ratingList: Array<any> = [];
   rateForm: FormGroup = new FormGroup({});
 
+  expenseList: Array<any> = [];
+  expenseSearchForm: FormGroup = new FormGroup({});
+
 
   ngOnInit(): void {
 
     this.userId = localStorage.getItem("userid");
 
     this.GetCampaign();
+
     this.GetTotal();
+
     this.GetImages(1);
     this.GetImages(2);
     this.GetImages(3);
+
     this.InitDonationSearch();
     this.GetDonationList();
+
     this.GetRatingList();
     this.InitRateForm();
+
+    this.GetExpenseList();
+    this.InitExpenseSearch();
 
     this.StartConnection();
     this.Listener();
@@ -119,7 +131,7 @@ constructor(private campaignService: CampaignService,
           this.campaign = res.body
           console.log(this.campaign);
 
-          if(this.campaign.received == "Received"){
+          if (this.campaign.received == "Received") {
             this.received = true;
           }
 
@@ -279,6 +291,29 @@ constructor(private campaignService: CampaignService,
     });
   }
 
+  GetExpenseList() {
+    var id = this.route.snapshot.paramMap.get('id');
+    var campaignId: number = +id!;
+
+    this.expenseService.GetListByCampaign(campaignId).subscribe(
+      (res: any) => {
+        let response = res.body.$values;
+        this.expenseList = this.expenseList.concat(response);
+        console.log(this.expenseList);
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
+  private InitExpenseSearch(): void {
+    this.expenseSearchForm = new FormGroup({
+      'fromdate': new FormControl("", Validators.required),
+      'todate': new FormControl("", Validators.required)
+    });
+  }
+
   GetRatingList() {
     if (this.ratingRequest) {
       this.ratingPageIndex += 1;
@@ -355,7 +390,7 @@ constructor(private campaignService: CampaignService,
       (res: any) => {
         if (res.type === HttpEventType.Response) {
           let response = res.body;
-          if(response){
+          if (response) {
             this.campaign.ratedByRecipient = this.rateForm.value.rate;
             this.campaign.ratedContentByRecipient = this.rateForm.value.comment;
             this.ReviewRating();
@@ -444,8 +479,8 @@ constructor(private campaignService: CampaignService,
       alert('Không tìm thấy ID của chiến dịch.');
       return;
     }
-    this.startDate = this.donationSearchForm.get('fromdate')?.value;
-    this.endDate = this.donationSearchForm.get('todate')?.value;
+    this.startDate = this.expenseSearchForm.get('fromdate')?.value;
+    this.endDate = this.expenseSearchForm.get('todate')?.value;
 
     if (!this.startDate || !this.endDate) {
       alert('Vui lòng chọn ngày bắt đầu và ngày kết thúc hợp lệ.');

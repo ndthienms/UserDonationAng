@@ -169,7 +169,8 @@
                                                 <!-- Button Form -->
                                                 <div class="button-form">
                                                     <button type="submit">Tìm</button>
-                                                    <button class="download" (click)="exportDonationFile()">Xuất Excel</button>
+                                                    <button class="download" (click)="exportDonationFile()">Xuất
+                                                        Excel</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -201,32 +202,54 @@
                                     <div class="tab-content-div">
                                         <!-- Filter Form -->
                                         <div class="filter-container">
-                                            <!-- Button Form -->
-                                            <div class="button-form expesne-button-form">
-                                                <button class="download" (click)="exportExpenseFile()">Xuất Excel</button>
-                                            </div>
+                                            <form [formGroup]="expenseSearchForm" (ngSubmit)="exportExpenseFile()"
+                                                class="form" action="">
+                                                <!-- Date Form -->
+                                                <div class="column">
+                                                    <div class="input-box">
+                                                        <label>From Date: </label>
+                                                        <input formControlName="fromdate" id="startdate" type="date"
+                                                            placeholder="Enter start date" required />
+                                                    </div>
+                                                    <div class="input-box">
+                                                        <label>To Date: </label>
+                                                        <input formControlName="todate" id="enddate" type="date"
+                                                            placeholder="Enter end date" required />
+                                                    </div>
+                                                </div>
+                                                <div class="button-form expesne-button-form">
+                                                    <button type="submit" class="download expense-download">Xuất
+                                                        Excel</button>
+                                                </div>
+                                            </form>
+
                                         </div>
                                         <div class="table-container">
+                                            <div class="add-expense-container">
+                                                <button (click)="AddExpensePopUp()" class="add-expense-btn">Add</button>
+                                            </div>
                                             <table>
                                                 <thead>
                                                     <tr>
-                                                        <th>Id</th>
-                                                        <th>Name</th>
-                                                        <th>Phone number</th>
-                                                        <th>Email</th>
+                                                        <th>ID</th>
+                                                        <th>Description</th>
+                                                        <th>Expense date</th>
+                                                        <th>Amount</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td><a href="#">123</a></td>
-                                                        <td>ABC</td>
-                                                        <td>0989765679</td>
-                                                        <td>email&#64;gmail.com</td>
+                                                    <tr *ngFor="let expense of expenseList">
+                                                        <td>{{ expense.id }}</td>
+                                                        <td>{{ expense.description }}</td>
+                                                        <td>{{ expense.expenseDate }}</td>
+                                                        <td>{{ expense.amount }}</td>
+                                                        <td><button (click)="DeleteExpenseConfirmationPopUp(expense)" class="delete-expense-btn">Delete</button></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div class="load-more"><button>Xem thêm</button></div>
+                                        <!-- <div class="load-more"><button>Xem thêm</button></div> -->
                                     </div>
 
                                     <!-- Rating -->
@@ -236,8 +259,7 @@
                                                 <div class="box-top">
                                                     <div class="profile">
                                                         <div class="profile-image">
-                                                            <img src={{rate.donorAva}}
-                                                                alt="">
+                                                            <img src={{rate.donorAva}} alt="">
                                                         </div>
                                                         <div class="name-user">
                                                             <strong>{{rate.donorName}}</strong>
@@ -247,13 +269,17 @@
                                                     <div class="reviews">
                                                         <i class='bi bi-star-fill star'></i>
                                                         <i *ngIf="2 > rate.rate" class='bi bi-star star'></i>
-                                                        <i *ngIf="rate.rate > 2 || rate.rate == 2" class='bi bi-star-fill star'></i>
+                                                        <i *ngIf="rate.rate > 2 || rate.rate == 2"
+                                                            class='bi bi-star-fill star'></i>
                                                         <i *ngIf="3 > rate.rate" class='bi bi-star star'></i>
-                                                        <i *ngIf="rate.rate > 3 || rate.rate == 3" class='bi bi-star-fill star'></i>
+                                                        <i *ngIf="rate.rate > 3 || rate.rate == 3"
+                                                            class='bi bi-star-fill star'></i>
                                                         <i *ngIf="4 > rate.rate" class='bi bi-star star'></i>
-                                                        <i *ngIf="rate.rate > 4 || rate.rate == 4" class='bi bi-star-fill star'></i>
+                                                        <i *ngIf="rate.rate > 4 || rate.rate == 4"
+                                                            class='bi bi-star-fill star'></i>
                                                         <i *ngIf="5 > rate.rate" class='bi bi-star star'></i>
-                                                        <i *ngIf="rate.rate > 5 || rate.rate == 5" class='bi bi-star-fill star'></i>
+                                                        <i *ngIf="rate.rate > 5 || rate.rate == 5"
+                                                            class='bi bi-star-fill star'></i>
                                                     </div>
                                                 </div>
 
@@ -261,7 +287,7 @@
                                                     <p>{{rate.content}}</p>
                                                 </div>
                                             </div>
-                                            <button (click)="GetRatingList()" >Xem thêm</button>
+                                            <button (click)="GetRatingList()">Xem thêm</button>
                                         </div>
                                     </div>
                                 </div>
@@ -270,6 +296,45 @@
 
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============== Add Form =============== -->
+    <section class="add-form-container" id="add-form-container">
+        <form class="form" [formGroup]="expenseForm" (ngSubmit)="AddExpenseSubmit()">
+            <div class="header">
+                <div class="title">Add Expense</div>
+                <i (click)="AddExpenseClose()" class="bi bi-x-lg"></i>
+            </div>
+            <div class="input-box">
+                <label>Description</label>
+                <input formControlName="description" type="text" placeholder="Enter description" required />
+            </div>
+            <div class="column">
+                <div class="input-box">
+                    <label>Amount</label>
+                    <input formControlName="amount" type="number" placeholder="Enter amount" required />
+                </div>
+                <div class="input-box">
+                    <label>Date</label>
+                    <input formControlName="expensedate" id="dob" type="date" placeholder="Enter expense date" required />
+                </div>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+    <!-- =============== Confirmation Popup=============== -->
+    <section id="confirmation">
+        <span class="overlay"></span>
+        <div class="modal-box">
+            <i class="bi bi-exclamation"></i>
+            <h2>Are you sure?</h2>
+            <h3>Do you want to remove it ?</h3>
+            <div class="buttons">
+                <button class="close-btn" (click)="DeleteExpenseConfirmationClose()">Cancel</button>
+                <button class="accept-btn" (click)="DeleteExpense()">OK</button>
             </div>
         </div>
     </section>

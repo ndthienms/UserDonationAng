@@ -88,15 +88,16 @@ export class DonorComponent implements OnInit {
         });
       navigator.serviceWorker.addEventListener('message', (event) => {
         const payload = event.data;
-        console.log("SvNo: ", payload.notification);
+        console.log("SvNo: ", payload);
 
         let bell = document.getElementById("bell_noti");
         if (this.notiNum == 0) {
           bell?.classList.add("bell");
         }
+        console.log(this.notiNum);
         this.notiNum += 1;
+        console.log(this.notiNum);
         bell?.setAttribute('current-count', this.notiNum + "")
-
       })
     }
   }
@@ -188,6 +189,9 @@ export class DonorComponent implements OnInit {
       bell?.classList.remove("bell");
 
       this.GetNotification();
+      this.openedNoti = !this.openedNoti;
+    }
+    else {
       this.openedNoti = !this.openedNoti;
     }
   }

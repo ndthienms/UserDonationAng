@@ -56,6 +56,13 @@ export class DonorComponent implements OnInit {
       if (userRole == "donor") {
         this.CheckReadLatestNotification();
         // this.router.navigateByUrl('/');
+
+        // FCM Push Notification
+        this.GetTokenFcm();
+        onMessage(this._messaging, (payload) => {
+          console.log('Message received. ', payload);
+          // You can show a notification or update the UI based on the payload
+        });
       }
       else if (userRole == "organiser") {
         this.router.navigateByUrl('/organiser/profile/' + userId);
@@ -72,11 +79,11 @@ export class DonorComponent implements OnInit {
     first_topic_icon?.classList.add("active");
 
     // FCM Push Notification
-    this.GetTokenFcm();
-    onMessage(this._messaging, (payload) => {
-      console.log('Message received. ', payload);
-      // You can show a notification or update the UI based on the payload
-    });
+    // this.GetTokenFcm();
+    // onMessage(this._messaging, (payload) => {
+    //   console.log('Message received. ', payload);
+    //   // You can show a notification or update the UI based on the payload
+    // });
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/firebase-messaging-sw.js')

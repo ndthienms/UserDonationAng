@@ -14,6 +14,8 @@ import { OrganiserComponent } from './Pages/organiser/organiser.component';
 import { ProfileComponent } from './Pages/organiser/profile/profile.component';
 import { CampaignAddEditComponent } from './Pages/organiser/campaign-add-edit/campaign-add-edit.component';
 import { CampaignDetailOrganiserComponent } from './Pages/organiser/campaign-detail-organiser/campaign-detail-organiser.component';
+import { ProfileRecipientComponent } from './Pages/recipient/profile-recipient/profile-recipient.component';
+import { CampaignDetailRecipientComponent } from './Pages/recipient/campaign-detail-recipient/campaign-detail-recipient.component';
 
 export const routes: Routes = [
     // {
@@ -55,6 +57,14 @@ export const routes: Routes = [
             { path: 'campaign/detail/:id', component: CampaignDetailOrganiserComponent, canActivate: [AuthGuard], data: { permittedRoles: ['organiser'] } },
             { path: 'campaign/addedit', component: CampaignAddEditComponent, canActivate: [AuthGuard], data: { permittedRoles: ['organiser'] } },
             { path: 'organiser', redirectTo: 'profile/:id', pathMatch: 'full' },
+        ]
+    },
+    {
+        path: 'recipient', component: OrganiserComponent,
+        children: [
+            { path: 'profile/:id', component: ProfileRecipientComponent, canActivate: [AuthGuard], data: { permittedRoles: ['recipient'] } },
+            { path: 'campaign/detail/:id', component: CampaignDetailRecipientComponent, canActivate: [AuthGuard], data: { permittedRoles: ['recipient'] } },
+            { path: 'recipient', redirectTo: 'profile/:id', pathMatch: 'full' },
         ]
     },
     { path: 'map', component: MapComponent },

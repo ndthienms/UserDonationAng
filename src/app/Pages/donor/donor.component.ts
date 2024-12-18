@@ -59,7 +59,7 @@ export class DonorComponent implements OnInit {
         this.router.navigateByUrl('/organiser/profile/' + userId);
       }
       else if (userRole == "recipient") {
-        this.router.navigateByUrl('/recipient');
+        this.router.navigateByUrl('/recipient/profile/' + userId);
       }
       else {
         this.Logout();

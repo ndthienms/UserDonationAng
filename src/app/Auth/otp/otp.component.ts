@@ -190,7 +190,7 @@ export class OtpComponent implements OnInit {
           this.router.navigateByUrl('/');
         }
         if (role == "recipient") {
-          this.router.navigateByUrl('/recipient');
+          this.router.navigateByUrl('/recipient/profile/'+userId);
         }
       },
       (err: any) => {

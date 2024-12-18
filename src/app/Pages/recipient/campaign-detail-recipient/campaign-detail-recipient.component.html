@@ -84,13 +84,9 @@
                         <!-- Participate - Donate -->
                         <div class="detail-button">
                             <div class="gen-main-btn fill-btn">
-                                <button (click)="JoinCampaign()" *ngIf="!participated" class="fill-btn">Tham
-                                    gia</button>
-                                <button (click)="CancelCampaignPartipation()" *ngIf="participated" class="fill-btn">Hủy
-                                    tham gia</button>
-                            </div>
-                            <div class="gen-main-btn border-btn">
-                                <button (click)="DonateActiveLink(campaign)" class="border-btn">Đóng góp</button>
+                                <button (click)="ReceivedConfirmation()" *ngIf="!received" class="fill-btn">Xác nhận</button>
+                                <button (click)="ReceivedConfirmation()" *ngIf="received" class="fill-btn">Hủy
+                                    xác nhận</button>
                             </div>
                         </div>
                         <!-- Recipient Review -->
@@ -207,7 +203,7 @@
                                     <div class="tab-content-div">
                                         <div class="filter-container">
                                             <div class="button-form expesne-button-form">
-                                                <button class="download expense-download" (click)="exportExpenseFile()">Xuất Excel</button>
+                                                <button class="download" (click)="exportExpenseFile()">Xuất Excel</button>
                                             </div>
                                         </div>
                                         <div class="table-container">
@@ -223,9 +219,9 @@
                                                 <tbody>
                                                   <!-- <tr *ngFor="let expense of expenses">
                                                     <td>{{ expense.id }}</td>
-                                                    <td>{{ expense.description }}</td>
-                                                    <td>{{ expense.expenseDate | date }}</td>
-                                                    <td>{{ expense.amount | number }}</td>
+                                                    <td *ngIf="editingExpense?.id !== expense.id">{{ expense.description }}</td>
+                                                    <td *ngIf="editingExpense?.id !== expense.id">{{ expense.expenseDate | date }}</td>
+                                                    <td *ngIf="editingExpense?.id !== expense.id">{{ expense.amount | number }}</td>
                                                   </tr> -->
                                                 </tbody>
                                               </table>

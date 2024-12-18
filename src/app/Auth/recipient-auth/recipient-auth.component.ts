@@ -127,7 +127,7 @@ export class RecipientAuthComponent implements OnInit {
         localStorage.setItem('userava', userAva);
 
         console.log(res);
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/recipient/profile/'+userId);
       },
       (err: any) => {
         console.log(err);

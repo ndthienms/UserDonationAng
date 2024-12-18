@@ -21,12 +21,12 @@ export class AuthGuard implements CanActivate {
                 return true;
               }
             }
-            this.router.navigate(['/forbidden']);
+            this.router.navigate(['/']);
             return false;
           }
           catch {
             localStorage.removeItem('token');
-            this.router.navigateByUrl('/login');
+            this.router.navigateByUrl('/');
           }
 
         }

@@ -34,6 +34,42 @@ export class CampaignService {
     );
   }
 
+  GetSearchedListByRecipient(pageIndex: any, searchForm: any) {
+    return this.http.post(this.baseUrl + '/GetSearchedListByRecipient/' + pageIndex, searchForm,
+      {
+        reportProgress: true,
+        observe: 'events',
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      },
+    );
+  }
+
+  UpdateRecivedByRecipient(campaignId: any, received: any) {
+    return this.http.put(this.baseUrl + '/UpdateRecivedByRecipient/' + campaignId, received,
+      {
+        reportProgress: true,
+        observe: 'events',
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      },
+    );
+  }
+
+  UpdateRatedByRecipient(campaignId: any, rateForm: any) {
+    return this.http.put(this.baseUrl + '/UpdateRatedByRecipient/' + campaignId, rateForm,
+      {
+        reportProgress: true,
+        observe: 'events',
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      },
+    );
+  }
+
   GetById(campaignId: any) {
     return this.http.get(this.baseUrl + '/GetById/' + campaignId,
       {
